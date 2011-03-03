@@ -74,7 +74,7 @@ public class GildedRose {
 
             if (items.get(i).getSellIn() < 0)
             {
-                if (items.get(i).getName() != "Aged Brie")
+                if (!"Aged Brie".equals(items.get(i).getName()))
                 {
                     if (!"Backstage passes to a TAFKAL80ETC concert".equals(items.get(i).getName()))
                     {
