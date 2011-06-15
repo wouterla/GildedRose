@@ -102,4 +102,15 @@ public class GildedRose {
         }
     }
 
+	public static List<Item> getItems() {
+		return items;
+	}
+
+	public static void setItems(List<Item> newItems) {
+		items = newItems;
+	}
+	
+	public static void resetItems() {
+		items = new ArrayList<Item>();
+	}
 }
