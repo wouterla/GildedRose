@@ -1,10 +1,9 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -12,15 +11,10 @@ import org.junit.Test;
 public class GildedRoseRegressionTest {
 
 	/* Helpers */
-	private List<Item> createListWithItem(Item itemUnderTest) {
-		List<Item> items = new ArrayList<Item>();
+	private List<StoreKeepingItem> createListWithItem(StoreKeepingItem itemUnderTest) {
+		List<StoreKeepingItem> items = new ArrayList<StoreKeepingItem>();
 		items.add(itemUnderTest);
 		return items;
-	}
-
-	private void setItemInGildedRose(Item item) {
-		GildedRose.resetItems();
-		GildedRose.setItems(createListWithItem(item));		
 	}
 	
 	/* Test Methods */	
@@ -31,134 +25,119 @@ public class GildedRoseRegressionTest {
 
 	@Test
 	public void testThatSellInValueIsDecreased() {
-		Item itemUnderTest = new Item("Item under test", 10, 0);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Item under test", 10, 0);
 		
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getSellIn() == 9);
+		assertEquals(9, itemUnderTest.getSellIn());
 	}
 
 	@Test
 	public void testThatQualityValueIsDecreased() {
-		Item itemUnderTest = new Item("Item under test", 1, 10);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Item under test", 1, 10);
 		
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 9);
+		assertEquals(9, itemUnderTest.getQuality());
 	}
 	
 	@Test
 	public void testThatQualityDecreasesTwiceAsMuchWhenSellByIsPassed() {
-		Item itemUnderTest = new Item("Item under test", 0, 10);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Item under test", 0, 10);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 8);
+		assertEquals(8, itemUnderTest.getQuality());
 	}
 	
 	@Test 
 	public void testThatQualityIsNeverNegative() {
-		Item itemUnderTest = new Item("Item under test", 0, 0);
-		setItemInGildedRose(itemUnderTest);
-
-		GildedRose.updateQuality();
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Item under test", 0, 0);
 		
-		assertTrue(itemUnderTest.getQuality() == 0);		
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
+		
+		assertEquals(0, itemUnderTest.getQuality());		
 	}
 	
 	@Test
 	public void testAgedBrieIncreasesQualityWithAge() {
-		Item itemUnderTest = new Item("Aged Brie", 5, 1);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Aged Brie", 5, 1);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 2);				
+		assertEquals(2, itemUnderTest.getQuality());				
 	}
 	
 	@Test
 	public void testQualityNeverIncreasesPastFifty() {
-		Item itemUnderTest = new Item("Aged Brie", 5, 50);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Aged Brie", 5, 50);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 50);						
+		assertEquals(50, itemUnderTest.getQuality());						
 	}
 
 	@Test
 	public void testSulfurasNeverChanges() {
-		Item itemUnderTest = new Item("Sulfuras, Hand of Ragnaros", 0, 25);
-		setItemInGildedRose(itemUnderTest);
-
-		GildedRose.updateQuality();
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Sulfuras, Hand of Ragnaros", 0, 25);
 		
-		assertTrue(itemUnderTest.getQuality() == 25);
-		assertTrue(itemUnderTest.getSellIn() == 0);		
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
+		
+		assertEquals(25, itemUnderTest.getQuality());
+		assertEquals(0, itemUnderTest.getSellIn());		
 	}
 
 	@Test
 	public void testBackstagePassIncreasesQualityByOneIfSellByGreaterThenTen() {
-		Item itemUnderTest = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 20);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Backstage passes to a TAFKAL80ETC concert", 11, 20);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 21);
+		assertEquals(21, itemUnderTest.getQuality());
 	}
 
 	@Test
 	public void testBackstagePassIncreasesQualityByTwoIfSellBySmallerThanTen() {
-		Item itemUnderTest = new Item("Backstage passes to a TAFKAL80ETC concert", 6, 20);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Backstage passes to a TAFKAL80ETC concert", 6, 20);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 22);						
+		assertEquals(22, itemUnderTest.getQuality());						
 	}
 
 	@Test
 	public void testBackstagePassIncreasesQualityByThreeIfSellBySmallerThanFive() {
-		Item itemUnderTest = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Backstage passes to a TAFKAL80ETC concert", 5, 20);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 23);						
+		assertEquals(23, itemUnderTest.getQuality());						
 	}
 	
 	@Test
 	public void testBackstagePassLosesValueAfterSellByPasses() {
-		Item itemUnderTest = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Backstage passes to a TAFKAL80ETC concert", 0, 20);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 0);						
+		assertEquals(0, itemUnderTest.getQuality());						
 	}
 	
 	@Test
-	@Ignore
 	public void testConjuredItemsLoseDoubleQualityBeforeSellBy() {
-		Item itemUnderTest = new Item("Conjured Mana Cake", 5, 20);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Conjured Mana Cake", 5, 20);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 18);						
+		assertEquals(18, itemUnderTest.getQuality());						
 	}
 
 	@Test
-	@Ignore
 	public void testConjuredItemsLoseDoubleQualityAfterSellBy() {
-		Item itemUnderTest = new Item("Conjured Mana Cake", 0, 20);
-		setItemInGildedRose(itemUnderTest);
+		StoreKeepingItem itemUnderTest = ItemFactory.create("Conjured Mana Cake", 0, 20);
 
-		GildedRose.updateQuality();
+		GildedRose.doDailyInventoryUpdateOnAllItems(createListWithItem(itemUnderTest));
 		
-		assertTrue(itemUnderTest.getQuality() == 16);						
+		assertEquals(16, itemUnderTest.getQuality());						
 	}
 }
