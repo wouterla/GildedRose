@@ -1,12 +1,13 @@
+package org.geenz.gildedrose;
 
 public class ItemFactory {
 
-	static final String MANA_CAKE = "Conjured Mana Cake";
-	static final String DEXTERITY_VEST = "+5 Dexterity Vest";
-	static final String ELIXIR = "Elixir of the Mongoose";
-	static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
-	static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
-	static final String AGED_BRIE = "Aged Brie";
+	public static final String MANA_CAKE = "Conjured Mana Cake";
+	public static final String DEXTERITY_VEST = "+5 Dexterity Vest";
+	public static final String ELIXIR = "Elixir of the Mongoose";
+	public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+	public static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
+	public static final String AGED_BRIE = "Aged Brie";
 	
 	static final int DEFAULT_QUALITY_DELTA = -1;
 	static final int VALUATING_QUALITY_DELTA = 1;

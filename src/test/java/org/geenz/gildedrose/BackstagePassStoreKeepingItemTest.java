@@ -1,3 +1,5 @@
+package org.geenz.gildedrose;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;

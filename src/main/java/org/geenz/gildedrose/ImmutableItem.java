@@ -1,3 +1,4 @@
+package org.geenz.gildedrose;
 
 public class ImmutableItem extends StoreKeepingItem {
 

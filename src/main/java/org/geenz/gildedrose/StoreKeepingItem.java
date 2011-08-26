@@ -1,3 +1,5 @@
+package org.geenz.gildedrose;
+
 public class StoreKeepingItem extends Item {
 
 	public int qualityDelta = -1;
@@ -43,7 +45,7 @@ public class StoreKeepingItem extends Item {
 
 	public void doDailyInventoryUpdate() {
 		changeQuality(getQualityDelta());
-		setSellIn(getSellIn() - 1);
+		decreaseSellIn();
 	}
 
 	public void changeQuality(int delta) {

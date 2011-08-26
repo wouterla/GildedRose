@@ -1,3 +1,4 @@
+package org.geenz.gildedrose;
 
 public class BackstagePassStoreKeepingItem extends StoreKeepingItem {
 
