@@ -31,7 +31,7 @@ public class GildedRose {
                 }
             } else {
                 depreciate(item);
-                depreciatePastSellin(item);
+                depreciateIfPastSellin(item);
                 if (isConjured(item)) {
                     depreciate(item);
                 }
@@ -39,7 +39,7 @@ public class GildedRose {
         }
     }
 
-    private static void depreciatePastSellin(Item item) {
+    private static void depreciateIfPastSellin(Item item) {
         if (item.getSellIn() < 0) {
             depreciate(item);
         }
