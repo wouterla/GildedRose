@@ -50,11 +50,13 @@ public class GildedRose {
     }
 
     private static void appreciateBrie(Item item) {
-        if (isAgedBrie(item)) {
+        if (!isAgedBrie(item)) {
+            return;
+        }
+
+        appreciate(item);
+        if (item.getSellIn() < 0) {
             appreciate(item);
-            if (item.getSellIn() < 0) {
-                appreciate(item);
-            }
         }
     }
 
@@ -65,16 +67,17 @@ public class GildedRose {
     }
 
     private static void appricateConcertTickets(Item item) {
-        if (isConcertTicket(item)) {
+        if (!isConcertTicket(item)) {
+            return;
+        }
+        appreciate(item);
+        if (item.getSellIn() >= 0 && item.getSellIn() <= 10) {
             appreciate(item);
-            if (item.getSellIn() >= 0 && item.getSellIn() <= 10) {
+            if (item.getSellIn() <= 5) {
                 appreciate(item);
-                if (item.getSellIn() <= 5) {
-                    appreciate(item);
-                }
-            } else {
-                item.setQuality(item.getQuality() - item.getQuality());
             }
+        } else {
+            item.setQuality(item.getQuality() - item.getQuality());
         }
     }
 
