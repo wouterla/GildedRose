@@ -23,54 +23,84 @@ public class GildedRose {
 
     public static void updateQuality(List<Item> items) {
         for (Item item : items) {
-            if ((!"Aged Brie".equals(item.getName())) && !"Backstage passes to a TAFKAL80ETC concert".equals(item.getName())) {
-                if (item.getQuality() > 0) {
-                    if (!"Sulfuras, Hand of Ragnaros".equals(item.getName())) {
-                        item.setQuality(item.getQuality() - 1);
-                    }
+            updateSellin(item);
+            if (isAgedBrie(item) || isConcertTicket(item)) {
+                if (isLessThenMaxQuality(item)) {
+                    appreciateBrie(item);
+                    appricateConcertTickets(item);
                 }
             } else {
-                if (item.getQuality() < 50) {
-                    item.setQuality(item.getQuality() + 1);
-
-                    if ("Backstage passes to a TAFKAL80ETC concert".equals(item.getName())) {
-                        if (item.getSellIn() < 11) {
-                            if (item.getQuality() < 50) {
-                                item.setQuality(item.getQuality() + 1);
-                            }
-                        }
-
-                        if (item.getSellIn() < 6) {
-                            if (item.getQuality() < 50) {
-                                item.setQuality(item.getQuality() + 1);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!"Sulfuras, Hand of Ragnaros".equals(item.getName())) {
-                item.setSellIn(item.getSellIn() - 1);
-            }
-
-            if (item.getSellIn() < 0) {
-                if (!"Aged Brie".equals(item.getName())) {
-                    if (!"Backstage passes to a TAFKAL80ETC concert".equals(item.getName())) {
-                        if (item.getQuality() > 0) {
-                            if (!"Sulfuras, Hand of Ragnaros".equals(item.getName())) {
-                                item.setQuality(item.getQuality() - 1);
-                            }
-                        }
-                    } else {
-                        item.setQuality(item.getQuality() - item.getQuality());
-                    }
-                } else {
-                    if (item.getQuality() < 50) {
-                        item.setQuality(item.getQuality() + 1);
-                    }
+                depreciate(item);
+                depreciatePastSellin(item);
+                if (isConjured(item)) {
+                    depreciate(item);
                 }
             }
         }
     }
 
+    private static void depreciatePastSellin(Item item) {
+        if (item.getSellIn() < 0) {
+            depreciate(item);
+        }
+    }
+
+    private static boolean isConjured(Item item) {
+        return "Conjured Mana Cake".equals(item.getName());
+    }
+
+    private static void appreciateBrie(Item item) {
+        if (isAgedBrie(item)) {
+            appreciate(item);
+            if (item.getSellIn() < 0) {
+                appreciate(item);
+            }
+        }
+    }
+
+    private static void updateSellin(Item item) {
+        if (!isLegendaryItem(item)) {
+            item.setSellIn(item.getSellIn() - 1);
+        }
+    }
+
+    private static void appricateConcertTickets(Item item) {
+        if (isConcertTicket(item)) {
+            appreciate(item);
+            if (item.getSellIn() >= 0 && item.getSellIn() <= 10) {
+                appreciate(item);
+                if (item.getSellIn() <= 5) {
+                    appreciate(item);
+                }
+            } else {
+                item.setQuality(item.getQuality() - item.getQuality());
+            }
+        }
+    }
+
+    private static boolean isAgedBrie(Item item) {
+        return "Aged Brie".equals(item.getName());
+    }
+
+    private static boolean isConcertTicket(Item item) {
+        return "Backstage passes to a TAFKAL80ETC concert".equals(item.getName());
+    }
+
+    private static void appreciate(Item item) {
+        item.setQuality(item.getQuality() + 1);
+    }
+
+    private static boolean isLessThenMaxQuality(Item item) {
+        return item.getQuality() < 50;
+    }
+
+    private static void depreciate(Item item) {
+        if (item.getQuality() > 0 && !isLegendaryItem(item)) {
+            item.setQuality(item.getQuality() - 1);
+        }
+    }
+
+    private static boolean isLegendaryItem(Item item) {
+        return "Sulfuras, Hand of Ragnaros".equals(item.getName());
+    }
 }

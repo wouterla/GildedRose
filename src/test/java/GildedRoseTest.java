@@ -13,13 +13,15 @@ public class GildedRoseTest {
     @Before
     public void setup() {
         items = new ArrayList<Item>();
+    }
 
-        /*
-         * new Item("+5 Dexterity Vest", 10, 20));
-         * 
-         * Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
-         * items.add(new Item("Conjured Mana Cake", 3, 6));
-         */
+    @Test
+    public void shouldDegradeConjureedItemsByTwo() {
+        items.add(new Item("Conjured Mana Cake", 3, 6));
+
+        GildedRose.updateQuality(items);
+
+        assertEquals(4, items.get(0).getQuality());
     }
 
     @Test
@@ -83,6 +85,15 @@ public class GildedRoseTest {
         GildedRose.updateQuality(items);
 
         assertEquals("Sellin", 1, items.get(0).getSellIn());
+    }
+
+    @Test
+    public void shouldUpdateBrieQualityByTwo() {
+        items.add(new Item("Aged Brie", 0, 0));
+
+        GildedRose.updateQuality(items);
+
+        assertEquals("Sellin", 2, items.get(0).getQuality());
     }
 
     @Test
