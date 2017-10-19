@@ -12,3 +12,12 @@ target/
 
 # Mac OS X
 .DS_Store
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+.nb-gradle/
