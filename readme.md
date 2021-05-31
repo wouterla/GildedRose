@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=oussamabadr_GildedRose&metric=alert_status)](https://sonarcloud.io/dashboard?id=oussamabadr_GildedRose) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=oussamabadr_GildedRose&metric=code_smells)](https://sonarcloud.io/dashboard?id=oussamabadr_GildedRose) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=oussamabadr_GildedRose&metric=sqale_index)](https://sonarcloud.io/dashboard?id=oussamabadr_GildedRose) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=oussamabadr_GildedRose&metric=coverage)](https://sonarcloud.io/dashboard?id=oussamabadr_GildedRose)
+
 Gilded Rose
 ===========
 
